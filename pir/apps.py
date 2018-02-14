@@ -1,5 +1,4 @@
 from django.apps import AppConfig
 
-
-class IndustryConfig(AppConfig):
-    name = 'industry'
+class SetupGuideConfig(AppConfig):
+  name = 'pir'
