@@ -12,6 +12,30 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from wagtail.contrib.table_block.blocks import TableBlock
 
+class HeadingBlock(blocks.StructBlock):
+    level = blocks.ChoiceBlock(
+        max_length = 2,
+        choices = [
+            ('h1', 'H1'),
+            ('h2', 'H2'),
+            ('h3', 'H3'),
+            ('h4', 'H4'),
+            ('h5', 'H5'),
+            ('h6', 'H6'),
+        ]
+    )
+    heading = blocks.CharBlock(max_length=250)
+
+    class Meta:
+        template = 'includes/heading.html'
+
+class ContentWithFootnotesBlock(blocks.StructBlock):
+    content = MarkdownBlock()
+    footnotes = MarkdownBlock()
+
+    class Meta:
+        template = 'includes/content_with_footnotes.html'
+
 
 class ImageLinkBlock(blocks.StructBlock):
     link = blocks.CharBlock()
@@ -76,9 +100,11 @@ class PirPage(Page):
     )
 
     body = StreamField([
-        ('heading', blocks.CharBlock(max_length=250)),
+        ('heading', HeadingBlock()),
+        # ('hero_image', ImageChooserBlock(template="includes/hero_image.html")),
         ('hero_image', ImageChooserBlock()),
         ('content', MarkdownBlock()),
+        ('content_with_footnotes', ContentWithFootnotesBlock()),
         ('footnotes', MarkdownBlock()),
         ('logo', ImageChooserBlock()),
         ('icon', ImageChooserBlock()),

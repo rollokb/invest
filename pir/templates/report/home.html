@@ -1,0 +1,23 @@
+{% load wagtailcore_tags %}
+
+<h1>yeah!</h1>
+
+
+
+{% for page in all_entries %}
+  
+  <section>
+  
+    page: {{ page }}<br>
+    
+    {% for block in page.body %}
+      block type: {{ block.block_type }}<br>
+      {% include_block block %}
+    {% endfor %}
+  
+  </section>
+
+{% endfor %}
+
+
+

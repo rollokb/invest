@@ -10,9 +10,9 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.search import urls as wagtailsearch_urls
 
-# class boom():
-#   a = 'b'
+from pir.views import ReportView
 
-# urlpatterns = [
-#     url(r'^report/', boom()),
-# ]
+
+urlpatterns = [
+    url(r'^report/', ReportView.as_view()),
+]
