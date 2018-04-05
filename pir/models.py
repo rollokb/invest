@@ -44,26 +44,8 @@ class ImageLinkBlock(blocks.StructBlock):
 
 class PirPage(Page):
 
-    sections_choices = (
-        ('0', 'Front Page'),
-        ('1', 'Sector Overview'),
-        ('2', 'Killer Facts'),
-        ('3', 'Macro Context Between Countries'),
-        ('4', 'UK Market Overview'),
-        ('5', 'UK Business Info'),
-        ('6', 'UK Geographic Overview'),
-        ('7', 'Talent & Education'),
-        ('8', 'Sector Initiatives'),
-        ('9', 'R&D and Innovation'),
-        ('10', 'R&D Innovation Case Study - Written'),
-        ('11', 'Who\'s Here?'),
-        ('12', 'Video Case Study'),
-        ('13', 'Services offered by DIT'),
-        ('14', 'Call to Action'),
-        ('15', 'Testimonials'),
-    )
-
     sectors_choices = (
+        ('generic', 'Generic'),
         ('renewable-energy', 'Renewable Energy'),
         ('automotive', 'Automotive'),
         ('financial-services', 'Financial Services'),
@@ -73,6 +55,7 @@ class PirPage(Page):
     )
 
     markets_choices = (
+        ('generic', 'Generic'),
         ('north-america', 'North America'),
         ('latin-america', 'Latin America'),
         ('europe', 'Europe'),
@@ -84,19 +67,16 @@ class PirPage(Page):
         ('asia-pacific', 'Asia Pacific'),
     )
 
-    section = models.CharField(
-        max_length = 64,
-        choices = sections_choices,
-    )
-
     sector = models.CharField(
         max_length = 32,
         choices = sectors_choices,
+        default = 'generic',
     )
 
     market = models.CharField(
         max_length = 32,
         choices = markets_choices,
+        default = 'generic',
     )
 
     body = StreamField([
@@ -111,10 +91,10 @@ class PirPage(Page):
         ('table', TableBlock()),
         ('video', blocks.CharBlock(max_length=256)),
         ('image_link', ImageLinkBlock()),
+        ('bullet_list', blocks.ListBlock(blocks.CharBlock(label = "Item"))),
     ])
     
     content_panels = Page.content_panels + [
-        FieldPanel('section'),
         FieldPanel('sector'),
         FieldPanel('market'),
         StreamFieldPanel('body'),

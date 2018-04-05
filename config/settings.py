@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'industry',
     'setup_guide',
     'pir',
+    'pir_folder',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -149,6 +150,7 @@ USE_TZ = True
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 if AWS_ACCESS_KEY_ID is None:
     MEDIA_URL = '/media/'
+    DEFAULT_FILE_STORAGE = ''
 else:
     MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -159,8 +161,9 @@ else:
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_HOST = os.environ.get('STATIC_HOST', '')
 STATIC_URL = STATIC_HOST + '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 
 # Logging for development
 if DEBUG:
